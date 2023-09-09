@@ -5,10 +5,10 @@ A deployment solution for the Cisco Catalyst 8000V on  Azure
 
 # A deployment solution for the Cisco Catalyst 8000v on Azure
 
-###The following solution is intended for ITPro’s to leverage for rapid and consistent deployments on Azure that require the Cisco Catalyst 8000V Edge systems within an existing virtual network. 
+### The following solution is intended for ITPro’s to leverage for rapid and consistent deployments on Azure that require the Cisco Catalyst 8000V Edge systems within an existing virtual network. 
 
-###You can deploy single or multiple systems within an existing or new Azure virtual network. The current Sku and offer from Cisco is currently Generation One at the time of this writing. 
-###If you are planning to deploy a Cisco Catalyst 8000v Edge on Azure, we encourage that you review Cisco's official guidance found here [Deploying Cisco Catalyst 8000V Edge Software on Microsoft Azure](https://www.cisco.com/c/en/us/td/docs/routers/C8000V/Azure/deploying-cisco-catalyst-8000v-on-microsoft-azure/c8000v_microsoftazure_overview.html) . Also please consult with Cisco if you have further questions.
+### You can deploy single or multiple systems within an existing or new Azure virtual network. The current Sku and offer from Cisco is currently Generation One at the time of this writing. 
+### If you are planning to deploy a Cisco Catalyst 8000v Edge on Azure, we encourage that you review Cisco's official guidance found here [Deploying Cisco Catalyst 8000V Edge Software on Microsoft Azure](https://www.cisco.com/c/en/us/td/docs/routers/C8000V/Azure/deploying-cisco-catalyst-8000v-on-microsoft-azure/c8000v_microsoftazure_overview.html) . Also please consult with Cisco if you have further questions.
 
 ## Solution Options
 
