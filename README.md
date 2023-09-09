@@ -33,7 +33,7 @@ A deployment solution for the Cisco Catalyst 8000V on  Azure
  ### The following diagram represents a high-level architecture overview
 
 
- ![VPN within ExpressRoute](./vpn over er.png)
+ ![VPN within ExpressRoute](./vpnoverer.png)
 
  
 
