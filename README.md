@@ -1,4 +1,4 @@
-# CiscoCatalyst8000V
+# Cisco Catalyst 8000v
 A deployment solution for the Cisco Catalyst 8000V on  Azure 
 
 
