@@ -28,7 +28,7 @@ A deployment solution for the Cisco Catalyst 8000V on  Azure
 
  ## Common Deployment Scenarios
 
- ### A common deployment scenario is to deploy the two Cisco Catalyst 8000v on Azure within a Hub virtual network or a single virtual network to create a VPN tunnel within an Azure ExpressRoute to encrypt traffic between Azure and on-premises. The solution can be used with Azure Virtual Wan. Please review the following articles [Configure a Site-to-Site VPN connection over ExpressRoute private peering](https://learn.microsoft.com/en-us/azure/vpn-gateway/site-to-site-vpn-private-peering) and  [ExpressRoute encryption: IPsec over ExpressRoute for Virtual WAN](https://learn.microsoft.com/en-us/azure/virtual-wan/vpn-over-expressroute).
+ ### A common deployment scenario is to deploy the two Cisco Catalyst 8000v on Azure within a Hub virtual network or a single virtual network to create a VPN tunnel within an Azure ExpressRoute to encrypt traffic between Azure and on-premises. The solution can be used with Azure Virtual Wan. Please review the following articles 
 
  ### The following diagram represents a high-level architecture overview
 
