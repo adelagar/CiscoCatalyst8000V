@@ -37,20 +37,20 @@ A deployment solution for the Cisco Catalyst 8000V on  Azure
 
  ### The following diagram represents a high-level architecture overview
 
- #### Figure 1
+ ##### Figure 1
 
 
  ![VPN within ExpressRoute](./images/vpnoverer.png)
 
 
-#### Figure 2
+##### Figure 2
  
 ![Subnet Topology](./images/subnettopology.png)
  
 
 
 
- ### Other deployment options are to leverage the Cisco Catalyst 8000v as a VPN or BGP endpoint within Azure or to on-premises without using the cloud native options. 
+ #### Please find Cisco Catalyst 8000v PDF documentation here (./Docs/deploy-c8000v-on-microsoft-azure.pdf)
 
 
  
