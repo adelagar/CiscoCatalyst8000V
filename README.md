@@ -44,7 +44,7 @@
 
 
 
- #### Please find Cisco Catalyst 8000v PDF documentation here for your convenience ![Cisco Catalyst 8000v Deployment on Azure](./Docs/deploy-c8000v-on-microsoft-azure.pdf)
+ #### Please find Cisco Catalyst 8000v Edge PDF documentation here for your convenience ![Cisco Catalyst 8000v Deployment on Azure](./Docs/deploy-c8000v-on-microsoft-azure.pdf) as well as other documents for review.
 
 
  
