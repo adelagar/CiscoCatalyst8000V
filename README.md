@@ -27,7 +27,7 @@
 
  ## Common Deployment Scenarios
 
-#### A common deployment scenario is to deploy the two Cisco Catalyst 8000v Edge on Azure within a Hub virtual network or a single virtual network to create a VPN tunnel within an Azure ExpressRoute to encrypt traffic between cloud infrastructure and on-premises.
+#### A common deployment scenario is to deploy the two Cisco Catalyst 8000v Edge on Azure within a Hub virtual network or a single virtual network to create a VPN tunnel within an Azure ExpressRoute. This deployment pattern allows the network traffic to be encrypted  between the cloud infrastructure and on-premises.
 
  ### The following diagram represents a high-level architecture overview
 
@@ -55,7 +55,7 @@
 
  ## Deployment Solution Below
 
- #### The following template deploys Cisco Catalyst 8000V virtual machines on an existing virtual network. The following prerequisite are required;
+ #### The following template deploys Cisco Catalyst 8000v Edge virtual machines on an existing virtual network. The following prerequisite are required;
  
  #### * An active Azure subscription
  #### * The name of the Azure resource group that the intended virtual network resides
