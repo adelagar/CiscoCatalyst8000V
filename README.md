@@ -40,7 +40,7 @@ A deployment solution for the Cisco Catalyst 8000V on  Azure
 
 #### Figure 2
  
-
+![Subnet Topology](./images/subnettopology.png)
  
 
 
