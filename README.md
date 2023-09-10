@@ -1,9 +1,5 @@
-# Cisco Catalyst 8000v Edge 
+#  A deployment solution for the Cisco Catalyst 8000v Edge on Azure
 
-
-
-
-# A deployment solution for the Cisco Catalyst 8000v on Azure
 
 #### The following solution is intended for ITPro’s to leverage for rapid and consistent deployments of Cisco Catalyst 8000V Edge systems within an existing Azure virtual network. 
 
