@@ -55,5 +55,11 @@
 
  ## Deployment Solution Below
 
- #### The following template deploys Cisco Catalyst 8000V virtual machines on an existing virtual network. The following prerequisite are required; an Azure subscription, the name of the Azure resource group that the intended virtual network resides, the name of the virtual network, and the name of the target subnets. 
- #### The person deploying this solution should have the proper administrative rights within the Azure subscription for the deployment to succeed.
+ #### The following template deploys Cisco Catalyst 8000V virtual machines on an existing virtual network. The following prerequisite are required;
+ 
+ #### * An active Azure subscription
+ #### * The name of the Azure resource group that the intended virtual network resides
+ #### * The name of the virtual network, and the name of the target subnets. 
+ #### * The person deploying this solution should have the proper administrative rights within the Azure subscription for the deployment to succeed.
+
+ 
