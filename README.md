@@ -59,7 +59,13 @@
  
  #### * An active Azure subscription
  #### * The name of the Azure resource group that the intended virtual network resides
- #### * The name of the virtual network, and the name of the target subnets. 
- #### * The person deploying this solution should have the proper administrative rights within the Azure subscription for the deployment to succeed.
+ #### * The name of the virtual network, and the name of the target subnets
+ #### * The person deploying this solution should have the proper administrative rights within the Azure subscription for the deployment to succeed
 
+ #### Microsoft Azure Commercial Click Here: ####
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fadelagar%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json
+
+
+#### Microsoft Azure Government Click Here: ####
+[![Deploy to Azure](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fadelagar%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json
  
