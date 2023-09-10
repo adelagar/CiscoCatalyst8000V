@@ -35,7 +35,7 @@ A deployment solution for the Cisco Catalyst 8000V on  Azure
  #### Figure 1
 
 
- ![VPN within ExpressRoute](./vpnoverer.png)
+ ![VPN within ExpressRoute](./images/vpnoverer.png)
 
 
 #### Figure 2
