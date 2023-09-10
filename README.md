@@ -25,7 +25,7 @@ A deployment solution for the Cisco Catalyst 8000V on  Azure
 
 
 #### The solution can be deployed either in production or development workloads in Azure Commercial and Azure Government. You will be required to have a preexisting virtual network with two separate subnets. The first subnet will support the public facing network interface and the second subnet will support the private network interface. 
- ### Please note that at the end of the virtual machine name we are appending a "-" and the next ordinal number. Example Cisco8000v-1, Cisco8000v-2, etc. Hostnames should not exceed fifteen characters.
+#### Please note that at the end of the virtual machine name we are appending a "-" and the next ordinal number. Example Cisco8000v-1, Cisco8000v-2, etc. Hostnames should not exceed fifteen characters.
  
 #### We are adding a route table, network security group, and availability set for the virtual machines to be deployed in your subscription. Please configure these objects as you see fit. You can also inherit both the existing route tables and network security groups that have already been preconfigured in your environment. The choice is yours.
 
@@ -48,7 +48,7 @@ A deployment solution for the Cisco Catalyst 8000V on  Azure
 
 
 
- #### Please find Cisco Catalyst 8000v PDF documentation here for your convenience [Cisco Catalyst 8000v Deployment on Azure]: (./Docs/deploy-c8000v-on-microsoft-azure.pdf)
+ #### Please find Cisco Catalyst 8000v PDF documentation here for your convenience ![Cisco Catalyst 8000v Deployment on Azure](./Docs/deploy-c8000v-on-microsoft-azure.pdf)
 
 
  
