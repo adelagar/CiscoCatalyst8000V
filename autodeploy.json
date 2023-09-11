@@ -4,37 +4,54 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.20.4.51522",
-      "templateHash": "8328537233674423592"
+      "version": "0.21.1.54444",
+      "templateHash": "15416734937716704667"
     }
   },
   "parameters": {
-    "VirtualNetworkName": {
+    "AuthenticationType": {
       "type": "string",
-      "defaultValue": "< Enter the name-of-your-vnet >",
+      "defaultValue": "password",
+      "allowedValues": [
+        "sshPublicKey",
+        "password"
+      ],
       "metadata": {
-        "description": "The name of the virtual network provisioned for the workload deployment"
+        "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
       }
     },
-    "SubnetName": {
+    "AvailabilitySetName": {
       "type": "string",
-      "defaultValue": "< Name of the subnet for the WAN network cards > ",
+      "defaultValue": "CSR-8000-AVSET",
       "metadata": {
-        "description": "Subnet you want to deploy your WAN network cards  "
+        "description": "Name of the Availability Set"
       }
     },
-    "SubnetName2": {
-      "type": "string",
-      "defaultValue": "< Name of the subnet for the LAN network cards  > ",
+    "LocalAdministratorPasswordOrKey": {
+      "type": "securestring",
       "metadata": {
-        "description": "Subnet you want to deploy your private network cards  "
+        "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
       }
     },
-    "VirtualNetworkResourceGroupName": {
+    "LocalAdministratorUsername": {
       "type": "string",
-      "defaultValue": "< Name of the virtual network resource group  >",
+      "defaultValue": "csr8000admin",
       "metadata": {
-        "description": "Name of the resource group for the existing virtual network"
+        "description": "Administrative Account"
+      }
+    },
+    "Location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for the deployed Azure resources."
+      }
+    },
+    "NetworkSecurityGroupName": {
+      "type": "string",
+      "defaultValue": "CSR8000-NSG",
+      "metadata": {
+        "description": "Name of the Network Secuity Group"
       }
     },
     "OSDiskPerformance": {
@@ -45,6 +62,39 @@
       ],
       "metadata": {
         "description": "Performance of OS Disk drive, Standard vs Premium"
+      }
+    },
+    "RouteTableName": {
+      "type": "string",
+      "defaultValue": "CSR8000-RouteTable",
+      "metadata": {
+        "description": "Name of the Route Table"
+      }
+    },
+    "Subnet1Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet you want to deploy your WAN network cards  "
+      }
+    },
+    "Subnet2Name": {
+      "type": "string",
+      "metadata": {
+        "description": "Subnet you want to deploy your private network cards  "
+      }
+    },
+    "VirtualMachineInstances": {
+      "type": "int",
+      "defaultValue": 2,
+      "metadata": {
+        "description": "Number of Cisco CSR's to be deployed"
+      }
+    },
+    "VirtualMachineName": {
+      "type": "string",
+      "defaultValue": "CSR-8000v",
+      "metadata": {
+        "description": "Basic Name Pattern of VM Not More than 15 Characters we are appending the Ordinal Number at end of the name"
       }
     },
     "VirtualMachineSKU": {
@@ -402,73 +452,16 @@
         "description": "Select the size for your virtual machine"
       }
     },
-    "VirtualMachineName": {
+    "VirtualNetworkName": {
       "type": "string",
-      "defaultValue": "CSR-8000v",
       "metadata": {
-        "description": "Basic Name Pattern of VM Not More than 15 Characters we are appending the Ordinal Number at end of the name"
+        "description": "The name of the virtual network provisioned for the workload deployment"
       }
     },
-    "VirtualMachineInstances": {
-      "type": "int",
-      "defaultValue": 2,
-      "metadata": {
-        "description": "Number of Cisco Catalyst to be deployed"
-      }
-    },
-    "AvailabilitySetName": {
+    "VirtualNetworkResourceGroupName": {
       "type": "string",
-      "defaultValue": "8000v-AVSET",
       "metadata": {
-        "description": "Name of the Availability Set"
-      }
-    },
-    "RouteTableName": {
-      "type": "string",
-      "defaultValue": "8000v-RouteTable",
-      "metadata": {
-        "description": "Name of the Route Table"
-      }
-    },
-    "NetworkSecurityGroupName": {
-      "type": "string",
-      "defaultValue": "8000v-NSG",
-      "metadata": {
-        "description": "Name of the Network Secuity Group"
-      }
-    },
-    "SecurityType": {
-      "type": "string",
-      "defaultValue": "Standard",
-      "allowedValues": [
-        "Standard"
-      ],
-      "metadata": {
-        "description": "Security Type of the Virtual Machine."
-      }
-    },
-    "Username": {
-      "type": "string",
-      "defaultValue": "cat8000vadmin",
-      "metadata": {
-        "description": "Administrative Account"
-      }
-    },
-    "AuthenticationType": {
-      "type": "string",
-      "defaultValue": "password",
-      "allowedValues": [
-        "sshPublicKey",
-        "password"
-      ],
-      "metadata": {
-        "description": "Type of authentication to use on the Virtual Machine. SSH key is recommended."
-      }
-    },
-    "AdminPasswordOrKey": {
-      "type": "securestring",
-      "metadata": {
-        "description": "SSH Key or password for the Virtual Machine. SSH key is recommended."
+        "description": "Name of the resource group for the existing virtual network"
       }
     }
   },
@@ -478,8 +471,8 @@
       "ssh": {
         "publicKeys": [
           {
-            "path": "[format('/home/{0}/.ssh/authorized_keys', parameters('Username'))]",
-            "keyData": "[parameters('AdminPasswordOrKey')]"
+            "path": "[format('/home/{0}/.ssh/authorized_keys', parameters('LocalAdministratorUsername'))]",
+            "keyData": "[parameters('LocalAdministratorPasswordOrKey')]"
           }
         ]
       }
@@ -510,7 +503,7 @@
       "type": "Microsoft.Compute/availabilitySets",
       "apiVersion": "2023-03-01",
       "name": "[parameters('AvailabilitySetName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('Location')]",
       "tags": {},
       "properties": {
         "platformFaultDomainCount": 2,
@@ -524,7 +517,7 @@
       "type": "Microsoft.Network/routeTables",
       "apiVersion": "2023-04-01",
       "name": "[parameters('RouteTableName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('Location')]",
       "tags": {},
       "properties": {
         "routes": [],
@@ -535,7 +528,7 @@
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2023-04-01",
       "name": "[parameters('NetworkSecurityGroupName')]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('Location')]",
       "tags": {},
       "properties": {
         "securityRules": [
@@ -564,7 +557,7 @@
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2023-04-01",
       "name": "[format('{0}-WAN-NIC{1}', parameters('VirtualMachineName'), add(range(0, parameters('VirtualMachineInstances'))[copyIndex()], 1))]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('Location')]",
       "tags": {},
       "properties": {
         "ipConfigurations": [
@@ -573,7 +566,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VirtualNetworkResourceGroupName')), 'Microsoft.Network/virtualNetworks/subnets', parameters('VirtualNetworkName'), parameters('SubnetName'))]"
+                "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VirtualNetworkResourceGroupName')), 'Microsoft.Network/virtualNetworks/subnets', parameters('VirtualNetworkName'), parameters('Subnet1Name'))]"
               }
             }
           }
@@ -594,7 +587,7 @@
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2023-04-01",
       "name": "[format('{0}-LAN-NIC{1}', parameters('VirtualMachineName'), add(range(0, parameters('VirtualMachineInstances'))[copyIndex()], 1))]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('Location')]",
       "tags": {},
       "properties": {
         "ipConfigurations": [
@@ -603,7 +596,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VirtualNetworkResourceGroupName')), 'Microsoft.Network/virtualNetworks/subnets', parameters('VirtualNetworkName'), parameters('SubnetName2'))]"
+                "id": "[extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, parameters('VirtualNetworkResourceGroupName')), 'Microsoft.Network/virtualNetworks/subnets', parameters('VirtualNetworkName'), parameters('Subnet2Name'))]"
               }
             }
           }
@@ -624,7 +617,7 @@
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "2023-03-01",
       "name": "[format('{0}-{1}', parameters('VirtualMachineName'), add(range(0, parameters('VirtualMachineInstances'))[copyIndex()], 1))]",
-      "location": "[resourceGroup().location]",
+      "location": "[parameters('Location')]",
       "tags": {},
       "plan": {
         "name": "[variables('Products')[parameters('VirtualMachineSKU')].name]",
@@ -640,8 +633,8 @@
         },
         "osProfile": {
           "computerName": "[format('{0}-{1}', parameters('VirtualMachineName'), add(range(0, parameters('VirtualMachineInstances'))[copyIndex()], 1))]",
-          "adminUsername": "[parameters('Username')]",
-          "adminPassword": "[parameters('AdminPasswordOrKey')]",
+          "adminUsername": "[parameters('LocalAdministratorUsername')]",
+          "adminPassword": "[parameters('LocalAdministratorPasswordOrKey')]",
           "linuxConfiguration": "[if(equals(parameters('AuthenticationType'), 'password'), null(), variables('linuxConfiguration'))]"
         },
         "storageProfile": {

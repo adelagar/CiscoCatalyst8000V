@@ -1,14 +1,25 @@
-@description('The name of the virtual network provisioned for the workload deployment')
-param VirtualNetworkName string = '< Enter the name-of-your-vnet >'
+@description('Type of authentication to use on the Virtual Machine. SSH key is recommended.')
+@allowed([
+  'sshPublicKey'
+  'password'
+])
+param AuthenticationType string = 'password'
 
-@description('Subnet you want to deploy your WAN network cards  ')
-param SubnetName string = '< Name of the subnet for the WAN network cards for the Cisco 8000 virtual machine > '
+@description('Name of the Availability Set')
+param AvailabilitySetName string = 'CSR-8000-AVSET'
 
-@description('Subnet you want to deploy your private network cards  ')
-param SubnetName2 string = '< Name of the subnet for the LAN network cards for the Cisco 8000 virtual machine > '
+@description('SSH Key or password for the Virtual Machine. SSH key is recommended.')
+@secure()
+param LocalAdministratorPasswordOrKey string
 
-@description('Name of the resource group for the existing virtual network')
-param VirtualNetworkResourceGroupName string = '< Name of the virtual network resource group  >'
+@description('Administrative Account')
+param LocalAdministratorUsername string = 'csr8000admin'
+
+@description('Location for the deployed Azure resources.')
+param Location string = resourceGroup().location
+
+@description('Name of the Network Secuity Group')
+param NetworkSecurityGroupName string = 'CSR8000-NSG'
 
 @description('Performance of OS Disk drive, Standard vs Premium')
 @allowed([
@@ -16,6 +27,21 @@ param VirtualNetworkResourceGroupName string = '< Name of the virtual network re
   'Premium_LRS'
 ])
 param OSDiskPerformance string
+
+@description('Name of the Route Table')
+param RouteTableName string = 'CSR8000-RouteTable'
+
+@description('Subnet you want to deploy your WAN network cards  ')
+param Subnet1Name string
+
+@description('Subnet you want to deploy your private network cards  ')
+param Subnet2Name string
+
+@description('Number of Cisco CSR\'s to be deployed')
+param VirtualMachineInstances int = 2
+
+@description('Basic Name Pattern of VM Not More than 15 Characters we are appending the Ordinal Number at end of the name')
+param VirtualMachineName string = 'CSR-8000v'
 
 @description('VM Offer for the virtual machine')
 @allowed([
@@ -365,52 +391,24 @@ param VirtualMachineSKU string
 ])
 param VirtualMachineSize string = 'Standard_DS3_v2'
 
-@description('Basic Name Pattern of VM Not More than 15 Characters we are appending the Ordinal Number at end of the name')
-param VirtualMachineName string = 'CSR-8000v'
+@description('The name of the virtual network provisioned for the workload deployment')
+param VirtualNetworkName string
 
-@description('Number of Cisco CSR\'s to be deployed')
-param VirtualMachineInstances int = 2
-
-@description('Name of the Availability Set')
-param AvailabilitySetName string = 'CSR-8000-AVSET'
-
-@description('Name of the Route Table')
-param RouteTableName string = 'CSR8000-RouteTable'
-
-@description('Name of the Network Secuity Group')
-param NetworkSecurityGroupName string = 'CSR8000-NSG'
-
-@description('Security Type of the Virtual Machine.')
-@allowed([
-  'Standard'
-])
-param SecurityType string = 'Standard'
-
-@description('Administrative Account')
-param Username string = 'csr8000admin'
-
-@description('Type of authentication to use on the Virtual Machine. SSH key is recommended.')
-@allowed([
-  'sshPublicKey'
-  'password'
-])
-param AuthenticationType string = 'password'
-
-@description('SSH Key or password for the Virtual Machine. SSH key is recommended.')
-@secure()
-param AdminPasswordOrKey string
+@description('Name of the resource group for the existing virtual network')
+param VirtualNetworkResourceGroupName string
 
 var linuxConfiguration = {
   disablePasswordAuthentication: true
   ssh: {
     publicKeys: [
       {
-        path: '/home/${Username}/.ssh/authorized_keys'
-        keyData: AdminPasswordOrKey
+        path: '/home/${LocalAdministratorUsername}/.ssh/authorized_keys'
+        keyData: LocalAdministratorPasswordOrKey
       }
     ]
   }
 }
+
 var Products = {
   'Cisco Catalyst 8000V-PAYG-DNA Advantage-17.11.01a - x64 Gen1': {
     name: '17_11_01a-payg-advantage'
@@ -439,17 +437,17 @@ resource virtualNetwork 'Microsoft.Network/virtualNetworks@2023-04-01' existing 
 
 resource subnet1 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' existing = {
   parent: virtualNetwork
-  name: SubnetName
+  name: Subnet1Name
 }
 
 resource subnet2 'Microsoft.Network/virtualNetworks/subnets@2023-04-01' existing = {
   parent: virtualNetwork
-  name: SubnetName2
+  name: Subnet2Name
 }
 
 resource availabilitySet 'Microsoft.Compute/availabilitySets@2023-03-01' = {
   name: AvailabilitySetName
-  location: resourceGroup().location
+  location: Location
   tags: {}
   properties: {
     platformFaultDomainCount: 2
@@ -462,7 +460,7 @@ resource availabilitySet 'Microsoft.Compute/availabilitySets@2023-03-01' = {
 
 resource routeTable 'Microsoft.Network/routeTables@2023-04-01' = {
   name: RouteTableName
-  location: resourceGroup().location
+  location: Location
   tags: {}
   properties: {
     routes: []
@@ -472,7 +470,7 @@ resource routeTable 'Microsoft.Network/routeTables@2023-04-01' = {
 
 resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2023-04-01' = {
   name: NetworkSecurityGroupName
-  location: resourceGroup().location
+  location: Location
   tags: {}
   properties: {
     securityRules: [
@@ -496,7 +494,7 @@ resource networkSecurityGroup 'Microsoft.Network/networkSecurityGroups@2023-04-0
 
 resource networkInterfaces_WAN 'Microsoft.Network/networkInterfaces@2023-04-01' = [for i in range(0, VirtualMachineInstances): {
   name: '${VirtualMachineName}-WAN-NIC${(i + 1)}'
-  location: resourceGroup().location
+  location: Location
   tags: {}
   properties: {
     ipConfigurations: [
@@ -518,7 +516,7 @@ resource networkInterfaces_WAN 'Microsoft.Network/networkInterfaces@2023-04-01' 
 
 resource networkInterfaces_LAN 'Microsoft.Network/networkInterfaces@2023-04-01' = [for i in range(0, VirtualMachineInstances): {
   name: '${VirtualMachineName}-LAN-NIC${(i + 1)}'
-  location: resourceGroup().location
+  location: Location
   tags: {}
   properties: {
     ipConfigurations: [
@@ -540,7 +538,7 @@ resource networkInterfaces_LAN 'Microsoft.Network/networkInterfaces@2023-04-01' 
 
 resource virtualMachines 'Microsoft.Compute/virtualMachines@2023-03-01' = [for i in range(0, VirtualMachineInstances): {
   name: '${VirtualMachineName}-${(i + 1)}'
-  location: resourceGroup().location
+  location: Location
   tags: {}
   plan: {
     name: Products[VirtualMachineSKU].name
@@ -556,8 +554,8 @@ resource virtualMachines 'Microsoft.Compute/virtualMachines@2023-03-01' = [for i
     }
     osProfile: {
       computerName: '${VirtualMachineName}-${(i + 1)}'
-      adminUsername: Username
-      adminPassword: AdminPasswordOrKey
+      adminUsername: LocalAdministratorUsername
+      adminPassword: LocalAdministratorPasswordOrKey
       linuxConfiguration: ((AuthenticationType == 'password') ? null : linuxConfiguration)
     }
     storageProfile: {
