@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.21.1.54444",
-      "templateHash": "15416734937716704667"
+      "templateHash": "14585984086974472892"
     }
   },
   "parameters": {
@@ -56,8 +56,10 @@
     },
     "OSDiskPerformance": {
       "type": "string",
+      "defaultValue": "Premium_LRS",
       "allowedValues": [
         "Standard_LRS",
+        "StandardSSD_LRS",
         "Premium_LRS"
       ],
       "metadata": {
@@ -87,7 +89,7 @@
       "type": "int",
       "defaultValue": 2,
       "metadata": {
-        "description": "Number of Cisco CSR's to be deployed"
+        "description": "Number of Cisco CSR's to deploy"
       }
     },
     "VirtualMachineName": {

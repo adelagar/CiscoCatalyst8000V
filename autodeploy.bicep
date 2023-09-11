@@ -24,9 +24,10 @@ param NetworkSecurityGroupName string = 'CSR8000-NSG'
 @description('Performance of OS Disk drive, Standard vs Premium')
 @allowed([
   'Standard_LRS'
+  'StandardSSD_LRS'
   'Premium_LRS'
 ])
-param OSDiskPerformance string
+param OSDiskPerformance string = 'Premium_LRS'
 
 @description('Name of the Route Table')
 param RouteTableName string = 'CSR8000-RouteTable'
@@ -37,7 +38,7 @@ param Subnet1Name string
 @description('Subnet you want to deploy your private network cards  ')
 param Subnet2Name string
 
-@description('Number of Cisco CSR\'s to be deployed')
+@description('Number of Cisco CSR\'s to deploy')
 param VirtualMachineInstances int = 2
 
 @description('Basic Name Pattern of VM Not More than 15 Characters we are appending the Ordinal Number at end of the name')
