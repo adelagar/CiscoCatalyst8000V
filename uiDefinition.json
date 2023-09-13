@@ -95,7 +95,7 @@
                             "toolTip": "Select an existing virtual network for the AVD session hosts.",
                             "constraints": {
                                 "required": true,
-                                "allowedValues": "[map(steps('hosts').network.virtualNetworksApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"description\":\"Resource group: ', first(skip(split(item.id, '/'), 4)), '\",\"value\":\"', item.id, '\"}')))]"
+                                "allowedValues": "[map(steps('networking').virtualNetworksApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"description\":\"Resource group: ', first(skip(split(item.id, '/'), 4)), '\",\"value\":\"', item.id, '\"}')))]"
                             }
                         },
                         {
