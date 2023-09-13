@@ -150,7 +150,7 @@
                             "type": "Microsoft.Common.DropDown",
                             "label": "Virtual Machine Instances",
                             "filter": false,
-                            "defaultValue": 2,
+                            "defaultValue": "2",
                             "toolTip": "Select the number of virtual machines to deploy.",
                             "constraints": {
                                 "required": true,
@@ -248,7 +248,7 @@
                             "type": "Microsoft.Common.DropDown",
                             "label": "Network Interfaces Per Virtual Machine",
                             "filter": false,
-                            "defaultValue": 2,
+                            "defaultValue": "2",
                             "toolTip": "Select the number of network interfaces to deploy for each virtual machine.",
                             "constraints": {
                                 "required": true,
