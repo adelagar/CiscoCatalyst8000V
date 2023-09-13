@@ -103,7 +103,7 @@
                             "type": "Microsoft.Solutions.ArmApiControl",
                             "request": {
                                 "method": "GET",
-                                "path": "[concat(steps('hosts').network.virtualNetwork, '?api-version=2023-02-01')]"
+                                "path": "[concat(steps('networking').virtualNetwork, '?api-version=2023-02-01')]"
                             }
                         },
                         {
@@ -111,7 +111,7 @@
                             "type": "Microsoft.Solutions.ArmApiControl",
                             "request": {
                                 "method": "GET",
-                                "path": "[concat(steps('hosts').network.virtualNetwork, '/subnets?api-version=2022-05-01')]"
+                                "path": "[concat(steps('networking').virtualNetwork, '/subnets?api-version=2022-05-01')]"
                             }
                         },
                         {
@@ -123,7 +123,7 @@
                             "toolTip": "Select an existing subnet for the WAN networking interfaces.",
                             "constraints": {
                                 "required": true,
-                                "allowedValues": "[map(steps('hosts').network.subnetsApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
+                                "allowedValues": "[map(steps('networking').subnetsApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
                             }
                         },
                         {
@@ -135,7 +135,7 @@
                             "toolTip": "Select an existing subnet for the LAN network interfaces.",
                             "constraints": {
                                 "required": false,
-                                "allowedValues": "[map(steps('hosts').network.subnetsApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
+                                "allowedValues": "[map(steps('networking').subnetsApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
                             }
                         }
                     ]
