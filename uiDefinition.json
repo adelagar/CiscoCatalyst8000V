@@ -1,0 +1,361 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2021-09-09/uiFormDefinition.schema.json",
+    "view": {
+        "kind": "Form",
+        "properties": {
+            "title": "Cisco Catalyst 8000v Edge Solution",
+            "steps": [
+                {
+                    "name": "basics",
+                    "label": "Basics",
+                    "elements": [
+                        {
+                            "name": "scope",
+                            "type": "Microsoft.Common.ResourceScope",
+                            "location": {
+                                "resourceTypes": []
+                            }
+                        },
+                        {
+                            "name": "naming",
+                            "type": "Microsoft.Common.Section",
+                            "label": "Naming",
+                            "elements": [
+                                {
+                                    "name": "availabilitySet",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Availability Set",
+                                    "toolTip": "The name of the availability set.",
+                                    "defaultValue": "CSR-8000-AVSET",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9_\\.-]{0,78}[a-zA-Z0-9_])$",
+                                        "validationMessage": "The value must be 1 - 80 characters in length. The value may only consist of alphanumerics, underscores, periods, and hyphens. The value must start with an alphanumeric. The value must end with an alphanumeric or underscore."
+                                    }
+                                },
+                                {
+                                    "name": "networkSecurityGroup",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Network Security Group",
+                                    "toolTip": "The name of the network security group.",
+                                    "defaultValue": "CSR8000-NSG",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9_\\.-]{0,78}[a-zA-Z0-9_])$",
+                                        "validationMessage": "The value must be 1 - 80 characters in length. The value may only consist of alphanumerics, underscores, periods, and hyphens. The value must start with an alphanumeric. The value must end with an alphanumeric or underscore."
+                                    }
+                                },
+                                {
+                                    "name": "routeTable",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Route Table",
+                                    "toolTip": "The name of the route table.",
+                                    "defaultValue": "CSR8000-RouteTable",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^(?:[a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9_\\.-]{0,78}[a-zA-Z0-9_])$",
+                                        "validationMessage": "The value must be 1 - 80 characters in length. The value may only consist of alphanumerics, underscores, periods, and hyphens. The value must start with an alphanumeric. The value must end with an alphanumeric or underscore."
+                                    }
+                                },
+                                {
+                                    "name": "virtualMachine",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Virtual Machine Prefix",
+                                    "toolTip": "The name prefix for the virtual machines.",
+                                    "defaultValue": "CSR-8000v",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "^(?!.*-$)[^\\/\\[\\]:|<>\\+=;,\\?@&_\\. \\*]{1,15}$",
+                                        "validationMessage": "The value must be 1 - 15 characters in length. The value must not contain a backslash, slash, double quote, single quote, square brackets, colon, pipe, angle brackets, plus sign, equals sign, semi-colon, comma, question mark, asterisk, at sign, ampersand, underscore, space, and period. The value must not end with a hyphen."
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "networking",
+                    "label": "Networking",
+                    "visible": true,
+                    "elements": [
+                        {
+                            "name": "virtualNetworksApi",
+                            "type": "Microsoft.Solutions.ArmApiControl",
+                            "request": {
+                                "method": "GET",
+                                "path": "[concat(steps('basics').scope.subscription.id, '/providers/Microsoft.Network/virtualNetworks?api-version=2022-11-01')]"
+                            }
+                        },
+                        {
+                            "name": "virtualNetwork",
+                            "type": "Microsoft.Common.DropDown",
+                            "visible": true,
+                            "label": "Virtual Network",
+                            "defaultValue": "",
+                            "toolTip": "Select an existing virtual network for the AVD session hosts.",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": "[map(steps('hosts').network.virtualNetworksApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"description\":\"Resource group: ', first(skip(split(item.id, '/'), 4)), '\",\"value\":\"', item.id, '\"}')))]"
+                            }
+                        },
+                        {
+                            "name": "virtualNetworkApi",
+                            "type": "Microsoft.Solutions.ArmApiControl",
+                            "request": {
+                                "method": "GET",
+                                "path": "[concat(steps('hosts').network.virtualNetwork, '?api-version=2023-02-01')]"
+                            }
+                        },
+                        {
+                            "name": "subnetsApi",
+                            "type": "Microsoft.Solutions.ArmApiControl",
+                            "request": {
+                                "method": "GET",
+                                "path": "[concat(steps('hosts').network.virtualNetwork, '/subnets?api-version=2022-05-01')]"
+                            }
+                        },
+                        {
+                            "name": "subnet1",
+                            "type": "Microsoft.Common.DropDown",
+                            "visible": true,
+                            "label": "Subnet (WAN)",
+                            "defaultValue": "",
+                            "toolTip": "Select an existing subnet for the WAN networking interfaces.",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": "[map(steps('hosts').network.subnetsApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
+                            }
+                        },
+                        {
+                            "name": "subnet2",
+                            "type": "Microsoft.Common.DropDown",
+                            "visible": true,
+                            "label": "Subnet (LAN)",
+                            "defaultValue": "",
+                            "toolTip": "Select an existing subnet for the LAN network interfaces.",
+                            "constraints": {
+                                "required": false,
+                                "allowedValues": "[map(steps('hosts').network.subnetsApi.value, (item) => parse(concat('{\"label\":\"', item.name, '\",\"value\":\"', item.name, '\"}')))]"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "virtualMachines",
+                    "label": "Virtual Machines",
+                    "visible": true,
+                    "elements": [
+                        {
+                            "name": "instances",
+                            "type": "Microsoft.Common.DropDown",
+                            "label": "Virtual Machine Instances",
+                            "filter": false,
+                            "defaultValue": 2,
+                            "toolTip": "Select the number of virtual machines to deploy.",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": 1,
+                                        "value": 1
+                                    },
+                                    {
+                                        "label": 2,
+                                        "value": 2
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "size",
+                            "type": "Microsoft.Compute.SizeSelector",
+                            "label": "Virtual Machine Size",
+                            "toolTip": "Select the size of the virtual machines.",
+                            "recommendedSizes": [
+                                "Standard_DS3_v2"
+                            ],
+                            "constraints": {
+                                "allowedSizes": [
+                                    "Standard_D2_v2",
+                                    "Standard_D3_v2",
+                                    "Standard_D4_v2",
+                                    "Standard_DS2_v2",
+                                    "Standard_DS3_v2",
+                                    "Standard_DS4_v2",
+                                    "Standard_F16s_v2",
+                                    "Standard_F32s_v2"
+                                ]
+                            },
+                            "options": {
+                                "hideDiskTypeFilter": false
+                            },
+                            "osPlatform": "Linux",
+                            "visible": true,
+                            "count": "[steps('virtualMachines').instances]"
+                        },
+                        {
+                            "name": "diskSku",
+                            "type": "Microsoft.Common.DropDown",
+                            "label": "OS Disk SKU",
+                            "filter": true,
+                            "defaultValue": "Premium_LRS",
+                            "toolTip": "Select the disk SKU for the operating system disk.",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": "Premium_LRS",
+                                        "value": "Premium_LRS"
+                                    },
+                                    {
+                                        "label": "Standard_LRS",
+                                        "value": "Standard_LRS"
+                                    },
+                                    {
+                                        "label": "StandardSSD_LRS",
+                                        "value": "StandardSSD_LRS"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "image",
+                            "type": "Microsoft.Common.DropDown",
+                            "label": "Image",
+                            "defaultValue": "Cisco Catalyst 8000V Edge Software-BYOL-17.12.01a - x64 Gen1",
+                            "toolTip": "Select the desired marketplace image offer.",
+                            "constraints": {
+                                "allowedValues": [
+                                    {
+                                        "label": "Cisco Catalyst 8000V-PAYG-DNA Advantage-17.11.01a - x64 Gen1",
+                                        "value": "Cisco Catalyst 8000V-PAYG-DNA Advantage-17.11.01a - x64 Gen1"
+                                    },
+                                    {
+                                        "label": "Cisco Catalyst 8000V-PAYG-DNA Essentials-17.11.01a - x64 Gen1",
+                                        "value": "Cisco Catalyst 8000V-PAYG-DNA Essentials-17.11.01a - x64 Gen1"
+                                    },
+                                    {
+                                        "label": "Cisco Catalyst 8000V Edge Software-BYOL-17.12.01a - x64 Gen1",
+                                        "value": "Cisco Catalyst 8000V Edge Software-BYOL-17.12.01a - x64 Gen1"
+                                    }
+                                ],
+                                "required": true
+                            },
+                            "visible": true
+                        },
+                        {
+                            "name": "networkInterfaces",
+                            "type": "Microsoft.Common.DropDown",
+                            "label": "Network Interfaces Per Virtual Machine",
+                            "filter": false,
+                            "defaultValue": 2,
+                            "toolTip": "Select the number of network interfaces to deploy for each virtual machine.",
+                            "constraints": {
+                                "required": true,
+                                "allowedValues": [
+                                    {
+                                        "label": 1,
+                                        "value": 1
+                                    },
+                                    {
+                                        "label": 2,
+                                        "value": 2
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "name": "localAdminCredentials",
+                            "type": "Microsoft.Common.Section",
+                            "visible": true,
+                            "label": "Local Administrator Credential",
+                            "elements": [
+                                {
+                                    "name": "username",
+                                    "type": "Microsoft.Common.TextBox",
+                                    "label": "Username",
+                                    "defaultValue": "",
+                                    "toolTip": "Input the username for the local administrator account.",
+                                    "constraints": {
+                                        "required": true,
+                                        "regex": "",
+                                        "validationMessage": ""
+                                    },
+                                    "visible": true
+                                },
+                                {
+                                    "name": "passwordOrKey",
+                                    "type": "Microsoft.Compute.CredentialsCombo",
+                                    "label": {
+                                      "authenticationType": "Authentication type",
+                                      "password": "Password",
+                                      "confirmPassword": "Confirm password",
+                                      "sshPublicKey": "SSH public key"
+                                    },
+                                    "toolTip": {
+                                      "authenticationType": "",
+                                      "password": "",
+                                      "sshPublicKey": ""
+                                    },
+                                    "constraints": {
+                                      "required": true,
+                                      "customPasswordRegex": "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=_!*<>()])(?=\\S+$).{12,123}$",
+                                      "customValidationMessage": "The value must be within 12 to 123 characters, be alphanumeric, and include 1 lower case character, 1 upper case character, 1 number, and 1 special character that is not '\\' or '-'."
+                                    },
+                                    "options": {
+                                      "hideConfirmation": false,
+                                      "hidePassword": false
+                                    },
+                                    "osPlatform": "Linux",
+                                    "visible": true
+                                  }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "tags",
+                    "label": "Tags",
+                    "visible": true,
+                    "elements": [
+                        {
+                            "name": "tags",
+                            "type": "Microsoft.Common.TagsByResource",
+                            "resources": [
+                                "Microsoft.Compute/availabilitySets",
+                                "Microsoft.Compute/virtualMachines",
+                                "Microsoft.Network/networkInterfaces",
+                                "Microsoft.Network/networkSecurityGroups",
+                                "Microsoft.Network/routeTables",
+                                "Microsoft.Network/virtualNetworks"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "outputs": {
+            "parameters": {
+                "AuthenticationType": "[steps('virtualMachines').localAdminCredentials.passwordOrKey.authenticationType]",
+                "AvailabilitySetName": "[steps('basics').naming.availabilitySet]",
+                "DiskSku": "[steps('virtualMachines').diskSku]",
+                "Image": "[steps('virtualMachines').image]",
+                "LocalAdministratorPasswordOrKey": "[if(equals(steps('virtualMachines').localAdminCredentials.passwordOrKey.authenticationType, 'password'), steps('virtualMachines').localAdminCredentials.passwordOrKey.password, steps('virtualMachines').localAdminCredentials.passwordOrKey.sshPublicKey)]",
+                "LocalAdministratorUsername": "[steps('virtualMachines').localAdminCredentials.username]",
+                "NetworkInterfacesCount": "[steps('virtualMachines').networkInterfaces]",
+                "NetworkSecurityGroupName": "[steps('basics').naming.networkSecurityGroup]",
+                "RouteTableName": "[steps('basics').naming.routeTable]",
+                "Subnet1Name": "[steps('networking').subnet1]",
+                "Subnet2Name": "[steps('networking').subnet2]",
+                "Tags": "[steps('tags').tags]",
+                "VirtualMachineInstances": "[steps('virtualMachines').instances]",
+                "VirtualMachineNamePrefix": "[steps('basics').naming.virtualMachine]",
+                "VirtualMachineSize": "[steps('virtualMachines').size]",
+                "VirtualNetworkResourceId": "[steps('networking').virtualNetwork]"
+            },
+            "kind": "ResourceGroup",
+            "location": "[steps('basics').scope.location.name]",
+            "resourceGroupId": "[steps('basics').scope.resourceGroup.id]"
+        }
+    }
+}
