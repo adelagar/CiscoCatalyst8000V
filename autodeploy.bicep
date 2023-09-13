@@ -281,7 +281,7 @@ resource virtualMachines 'Microsoft.Compute/virtualMachines@2023-03-01' = [for i
 }]
 
 resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = [for i in range(0, VirtualMachineInstances): {
-  scope: virtualMachines[i]
+  scope: routeTable
   name: guid(virtualMachines[i].id, '4d97b98b-1d4f-4787-a291-c67834d212e7', routeTable.id)
   properties: {
     principalId: virtualMachines[i].identity.principalId

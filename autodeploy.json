@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.21.1.54444",
-      "templateHash": "12573115860831541793"
+      "templateHash": "5193757238742402008"
     }
   },
   "parameters": {
@@ -376,7 +376,7 @@
       },
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2022-04-01",
-      "scope": "[format('Microsoft.Compute/virtualMachines/{0}', format('{0}-{1}', parameters('VirtualMachineNamePrefix'), add(range(0, parameters('VirtualMachineInstances'))[range(0, parameters('VirtualMachineInstances'))[copyIndex()]], 1)))]",
+      "scope": "[format('Microsoft.Network/routeTables/{0}', parameters('RouteTableName'))]",
       "name": "[guid(resourceId('Microsoft.Compute/virtualMachines', format('{0}-{1}', parameters('VirtualMachineNamePrefix'), add(range(0, parameters('VirtualMachineInstances'))[range(0, parameters('VirtualMachineInstances'))[copyIndex()]], 1))), '4d97b98b-1d4f-4787-a291-c67834d212e7', resourceId('Microsoft.Network/routeTables', parameters('RouteTableName')))]",
       "properties": {
         "principalId": "[reference(resourceId('Microsoft.Compute/virtualMachines', format('{0}-{1}', parameters('VirtualMachineNamePrefix'), add(range(0, parameters('VirtualMachineInstances'))[range(0, parameters('VirtualMachineInstances'))[copyIndex()]], 1))), '2023-03-01', 'full').identity.principalId]",
@@ -385,7 +385,6 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Network/routeTables', parameters('RouteTableName'))]",
-        "[resourceId('Microsoft.Compute/virtualMachines', format('{0}-{1}', parameters('VirtualMachineNamePrefix'), add(range(0, parameters('VirtualMachineInstances'))[range(0, parameters('VirtualMachineInstances'))[copyIndex()]], 1)))]",
         "[resourceId('Microsoft.Compute/virtualMachines', format('{0}-{1}', parameters('VirtualMachineNamePrefix'), add(range(0, parameters('VirtualMachineInstances'))[range(0, parameters('VirtualMachineInstances'))[copyIndex()]], 1)))]",
         "[resourceId('Microsoft.Compute/virtualMachines', format('{0}-{1}', parameters('VirtualMachineNamePrefix'), add(range(0, parameters('VirtualMachineInstances'))[range(0, parameters('VirtualMachineInstances'))[copyIndex()]], 1)))]"
       ]
