@@ -29,7 +29,7 @@
 
 #### A common deployment scenario is to deploy the two Cisco Catalyst 8000v Edge on Azure within a Hub virtual network or a single virtual network to create a VPN tunnel within an Azure ExpressRoute. This deployment pattern allows the network traffic to be encrypted  between the cloud infrastructure and on-premises end to end.
 
-#### Another deployment scenario involves Virtual Route Forwarding (VRF). If you have a VRF on-premises datacenter and want to connect that environment with Azure with a ExpressRoute you will need to create a network overlay. This solution can support that scenario. 
+#### Another deployment scenario involves Virtual Route Forwarding (VRF). If you have a VRF implemented within your enterprise on-premises and want to connect that environment with Azure with a ExpressRoute you will need to create a network overlay. This solution can support that scenario. 
 
  ### The following diagram represents a high-level architecture overview
 
