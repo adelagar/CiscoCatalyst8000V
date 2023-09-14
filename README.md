@@ -64,8 +64,8 @@
 
  #### Microsoft Azure Commercial Click Here: ####
 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjamasten%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fjamasten%2FCiscoCatalyst8000V%2Fmain%2FuiDefinition.json)
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fadelagar%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fadelagar%2FCiscoCatalyst8000V%2Fmain%2FuiDefinition.json)
 
 #### Microsoft Azure Government Click Here: ####
  
-[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjamasten%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fjamasten%2FCiscoCatalyst8000V%2Fmain%2FuiDefinition.json)
+[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fadelagar%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fadelagar%2FCiscoCatalyst8000V%2Fmain%2FuiDefinition.json)
