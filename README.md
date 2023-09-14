@@ -12,7 +12,7 @@
 ## Solution Options
 
 #### The Cisco Catalyst 8000v Edge can be deployed under two consumption models. The first option is defined as Bring your Own License (BYOL) and the second option is Pay as you Go (PAYGO). The first option requires you to buy your own license from Cisco so that you can apply it to the system to become active as well as pay for the monthly computing charge from Azure. 
-#### The second option PAYGO you pay by the size of the virtual machine and the compute hours and do not have to buy a separate license. The two common images in this solution accelerator are based on either an Advantage or an Essentials sku which provide varying options once deployed. Please consult with your cisco representative on which option best fits your needs.
+#### The second option PAYGO you pay by the size of the virtual machine and the compute hours and do not have to buy a separate license. The two common images in this solution accelerator are based on either an Advantage or an Essentials sku which provide varying options once deployed. Please consult with your Cisco representative on which option best fits your needs.
 #### This solution accelerator has the following sku’ s available with the most recent build version which were available at the time of this writing.
 
 *  Cisco Catalyst 8000V-PAYG-DNA Advantage-17.11.01a - x64 Gen1
