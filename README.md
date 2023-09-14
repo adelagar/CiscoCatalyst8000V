@@ -63,11 +63,9 @@
  #### * The person deploying this solution should have the proper administrative rights within the Azure subscription for the deployment to succeed
 
  #### Microsoft Azure Commercial Click Here: ####
- 
-[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fadelagar%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json)
 
+[![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjamasten%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fjamasten%2FCiscoCatalyst8000V%2Fmain%2FuiDefinition.json)
 
 #### Microsoft Azure Government Click Here: ####
-
-[![Deploy to Azure](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fadelagar%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json)
  
+[![Deploy to Azure Gov](https://aka.ms/deploytoazuregovbutton)](https://portal.azure.us/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fjamasten%2FCiscoCatalyst8000V%2Fmain%2Fautodeploy.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2Fjamasten%2FCiscoCatalyst8000V%2Fmain%2FuiDefinition.json)
