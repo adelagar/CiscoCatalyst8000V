@@ -50,7 +50,7 @@
 
  ## High Availability 
 
- #### Please also review [Cisco Catalyst 8000V Edge Software High Availability Configuration Guide](https://www.cisco.com/c/en/us/td/docs/routers/C8000V/HighAvailability/c8000v-high-availability-configuration-guide/configure-high-availability-for-azure.html) posted here.
+ #### Please also review [Cisco Catalyst 8000V Edge Software High Availability Configuration Guide](https://www.cisco.com/c/en/us/td/docs/routers/C8000V/HighAvailability/c8000v-high-availability-configuration-guide/configure-high-availability-for-azure.html) online documentation.
 
 
  ## Deployment Solution Below
