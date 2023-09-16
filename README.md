@@ -48,6 +48,8 @@
 
  #### Please find Cisco Catalyst 8000v Edge PDF documentation here for your convenience [Cisco Catalyst 8000v Deployment on Azure](./Docs/deploy-c8000v-on-microsoft-azure.pdf) as well as other documents for review.
 
+ #### Please also review [Cisco Catalyst 8000V Edge Software High Availability Configuration Guide](https://www.cisco.com/c/en/us/td/docs/routers/C8000V/HighAvailability/c8000v-high-availability-configuration-guide/configure-high-availability-for-azure.html) posted here.
+
 
  
  #### Feel free to use this solution, edit, and add functionality as you see fit. This solution is provided "as is" for the greater technical community with no guarantees. 
