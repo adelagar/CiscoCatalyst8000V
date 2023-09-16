@@ -53,13 +53,12 @@
  #### Please also review [Cisco Catalyst 8000V Edge Software High Availability Configuration Guide](https://www.cisco.com/c/en/us/td/docs/routers/C8000V/HighAvailability/c8000v-high-availability-configuration-guide/configure-high-availability-for-azure.html) posted here.
 
 
- 
+ ## Deployment Solution Below
+
  #### Feel free to use this solution, edit, and add functionality as you see fit. This solution is provided "as is" for the greater technical community with no guarantees. 
  #### Use the solution with the Azure portal Custom Template Deployment feature or most common pipeline tools.
  #### I would like to recognize Jason Masten, my friend and colleague who refactored my original code and made it world class. Thank you Jason!!
  #### Please enjoy and would love to hear feedback to improve the solution! 
-
- ## Deployment Solution Below
 
  #### The following template deploys Cisco Catalyst 8000v Edge virtual machines on an existing virtual network. The following prerequisite are required;
  
