@@ -200,6 +200,7 @@ resource networkInterfaces_LAN 'Microsoft.Network/networkInterfaces@2023-04-01' 
   tags: contains(Tags, 'Microsoft.Network/networkInterfaces') ? Tags['Microsoft.Network/networkInterfaces'] : {}
   properties: {
     enableAcceleratedNetworking: true
+    enableIPForwarding: true
     ipConfigurations: [
       {
         name: 'ipConfig2'
